@@ -1,0 +1,10 @@
+<ul class="thumbnails">
+    {% for image in images %}
+    <li{% if image.title is defined and image.thumbnail_width != "none" %} class="{{ image.thumbnail_width }}{% endif %}">
+        <div class="thumbnail">
+            <img src="{{ image.image }}" title="{% if image.title is defined %}{{ image.title }}{% endif %}" alt="{% if image.alt is defined %}{{ image.alt }}{% endif %}">
+            {% if image.thumbnail_caption is defined %}{{ image.thumbnail_caption }}{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,5 @@
+BootstrapSplitDropdownButtonBlockBundle
+---------------------------------------
+
+Implements an AlphaLemon CMS app-block capable to manage a Twitter Bootstrap split 
+dropdown button by a nice ajax powered inteface.

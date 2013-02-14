@@ -1,0 +1,7 @@
+{
+    "bundles" : {
+        "AlphaLemon\\Block\\BootstrapThumbnailBlockBundle\\BootstrapThumbnailBlockBundle" : {
+            "environments" : ["all"]
+        }
+    }
+}

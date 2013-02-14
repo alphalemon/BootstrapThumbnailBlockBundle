@@ -1,0 +1,2 @@
+imports:
+- { resource: "@BootstrapThumbnailBlockBundle/Resources/config/app_block.xml" }

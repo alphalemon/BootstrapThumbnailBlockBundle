@@ -1,0 +1,2 @@
+imports:
+- { resource: "@BootstrapThumbnailBlockBundle/Resources/config/config_alcms.yml" }
