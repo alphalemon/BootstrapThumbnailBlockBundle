@@ -4,28 +4,17 @@
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="bootstrapthumbnailblock.editor_settings" type="collection">
-            <parameter key="rich_editor">true</parameter>
-        </parameter>
-
         <parameter key="bootstrap_thumbnail_block.block.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block\AlBlockManagerBootstrapThumbnailBlock</parameter>
-        <parameter key="bootstrap_thumbnail_block_rendering.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Listener\ImagesBlockEditorListener</parameter>
-        <parameter key="bootstrap_thumbnail_block_edited.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Listener\ImagesBlockEditedListener</parameter>
+        <parameter key="bootstrapthumbnailblock.form.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Form\AlThumbnailType</parameter>
     </parameters>
 
     <services>
         <service id="bootstrap_thumbnail_block.block" class="%bootstrap_thumbnail_block.block.class%">
-            <tag name="alphalemon_cms.blocks_factory.block" description="Thumbnail" type="BootstrapThumbnailBlock" group="bootstrap,Twitter Bootstrap,Component" />
+            <tag name="alphalemon_cms.blocks_factory.block" description="Thumbnail" type="BootstrapThumbnailBlock" group="bootstrap,Twitter Bootstrap" />
             <argument type="service" id="service_container" />
         </service>
         
-        <service id="bootstrap_thumbnail_block_rendering" class="%bootstrap_thumbnail_block_rendering.class%">
-            <tag name="alcms.event_listener" event="actions.block_editor_rendering" method="onBlockEditorRendering" priority="0" />
-        </service>
-        
-        <service id="bootstrap_thumbnail_block_edited" class="%bootstrap_thumbnail_block_edited.class%">
-            <tag name="alcms.event_listener" event="actions.block_edited" method="onBlockEdited" priority="0" />
-            <argument type="service" id="templating" />
+        <service id="bootstrapthumbnailblock.form" class="%bootstrapthumbnailblock.form.class%">
         </service>
     </services>
 </container>

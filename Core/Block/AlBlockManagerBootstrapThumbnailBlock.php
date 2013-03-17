@@ -5,46 +5,36 @@
 
 namespace AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block;
 
-use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\ImagesBlock\AlBlockManagerImages;
 use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\JsonBlock\AlBlockManagerJsonBlock;
+use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\AlBlockManagerContainer;
 
 /**
  * Description of AlBlockManagerBootstrapThumbnailBlock
  */
-class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerImages
+class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerContainer
 {
     public function getDefaultValue()
-    {
-        $value = 
-            '
-                {
-                    "0" : {
-                        "image": "holder.js/260x180",
-                        "title" : "Sample title",
-                        "alt" : "Sample alt",
-                        "thumbnail_width": "span3",
-                        "thumbnail_caption": "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus."
-                    },
-                    "1" : {
-                        "image": "holder.js/260x180",
-                        "title" : "Sample title",
-                        "alt" : "Sample alt",
-                        "thumbnail_width": "span3",
-                        "thumbnail_caption": "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus."
-                    }
+    {        
+        $value = '
+            {
+                "0" : {
+                    "width": "span3"
+                },
+                "1" : {
+                    "width": "span3"
                 }
-            ';
+            }';
         
         return array('Content' => $value);
     }
-    
+
     public function getHtml()
     {
         $items = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock->getContent());
         
         return array('RenderView' => array(
             'view' => 'BootstrapThumbnailBlockBundle:Thumbnail:thumbnail.html.twig',
-            'options' => array('images' => $items),
+            'options' => array('values' => $items, 'parent' => $this->alBlock),
         ));
     }
     
@@ -54,14 +44,41 @@ class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerImages
             return "";
         }
         
-        $images = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock);
+        $values = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock);
         
-        return array_map(function($el)
+        $images = array_map(function($el)
             { 
                 $image = str_replace("\\", "/", $el['image']);
                 
-                return array_merge($el, array('id' => md5($image), 'image' => $image));             
-            }, $images
+                return array_merge($el, array('image' => $image));             
+            }, $values
         );
+        
+        $values = array_merge($images, $values);
+        
+        return $values;
+    }
+    
+    protected function edit(array $values)
+    {
+        $data = json_decode($values['Content'], true); 
+        $savedValues = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock);
+        
+        if ($data["operation"] == "add") {
+            $savedValues[] = $data["value"];
+            $values = array("Content" => json_encode($savedValues));
+        }
+        
+        if ($data["operation"] == "remove") {
+            unset($savedValues[$data["item"]]);
+            
+            $blocksRepository = $this->container->get('alpha_lemon_cms.factory_repository');
+            $repository = $blocksRepository->createRepository('Block');
+            $repository->deleteIncludedBlocks($data["key"]);
+            
+            $values = array("Content" => json_encode($savedValues));
+        }
+        
+        return parent::edit($values);
     }
 }
