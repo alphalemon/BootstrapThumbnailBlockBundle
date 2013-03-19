@@ -4,6 +4,10 @@
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="bootstrapthumbnailblock.external_javascripts" type="collection">
+            <parameter>@BootstrapThumbnailBlockBundle/Resources/public/js/thumbnail_editor.js</parameter>
+        </parameter>
+        
         <parameter key="bootstrap_thumbnail_block.block.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block\AlBlockManagerBootstrapThumbnailBlock</parameter>
         <parameter key="bootstrapthumbnailblock.form.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Form\AlThumbnailType</parameter>
     </parameters>
