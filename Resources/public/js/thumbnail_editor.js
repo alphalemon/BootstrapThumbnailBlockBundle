@@ -1,23 +1,17 @@
 $(document).ready(function() {
-    $(document).on("blockEditing", function(event, element, blockType){
-        if (blockType != 'BootstrapThumbnailBlock') {
+    $(document).on("blockEditing", function(event, element){
+        if (element.attr('data-type') != 'BootstrapThumbnailsBlock') {
             return;
         }
         
-        $(element)
-            .find('.al-thumbnail-list')
-            .inlinelist('start', { addValue: '{"operation": "add", "value": { "width": "span3" }}'     })
-        ;
+        element.inlinelist('start', { addValue: '{"operation": "add", "value": { "type": "BootstrapThumbnailBlock" }}'     });
     });
     
-    $(document).on("blockStopEditing", function(event, element, blockType){ 
-        if (blockType != 'BootstrapThumbnailBlock') {
+    $(document).on("blockStopEditing", function(event, element){ 
+        if (element.attr('data-type') != 'BootstrapThumbnailsBlock') {
             return;
         }
                 
-        $(element)
-            .find('.al-thumbnail-list')
-            .inlinelist('stop')
-        ;
+        element.inlinelist('stop');
     });
 });

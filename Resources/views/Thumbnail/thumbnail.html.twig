@@ -1,21 +1,11 @@
-<ul class="thumbnails al-thumbnail-list">
-    {% if values|length > 0 %}
-    {% for key, image in values %}
-    {% set baseKey = parent.getId ~ "-" ~ key %} 
-    <li{% if image.width is defined and image.width != "none" %} class="{{ image.width }}"{% endif %} data-item="{{ key }}" data-key="{{ baseKey }}">
-        <div class="thumbnail">
-            {% set blockKey = baseKey ~ "-0" %}   
-            {% set default = "Default text" %}   
-            {{ renderIncludedBlock(blockKey, parent, "Image", true) }}
-            <div class="caption">
-                {% set blockKey = baseKey ~ "-1" %}   
-                {% set default = "Default text" %}   
-                {{ renderIncludedBlock(blockKey, parent, "Text", true) }}
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-    {% else %}
-    <li class="al-empty">Any thumbnail added</li>
-    {% endif %}
-</ul>
+{% extends "AlphaLemonCmsBundle:Editor:base_editor.html.twig" %}
+
+{% block body %}
+{% if key is not defined %}
+{% set key = 0 %}
+{% endif %}
+{% set baseSlotName = parent.getId ~ "-" ~ key %} 
+<li{% if thumbnail.width is defined and thumbnail.width != "none" %} class="{{ thumbnail.width }}"{% endif %} {{ editor|raw }}>
+    {% include "BootstrapThumbnailBlockBundle:Thumbnail:_thumbnail.html.twig" %}
+</li>
+{% endblock %}

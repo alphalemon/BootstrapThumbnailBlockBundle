@@ -4,21 +4,28 @@
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="bootstrapthumbnailblock.external_javascripts" type="collection">
+        <parameter key="bootstrapthumbnailblock.external_javascripts.cms" type="collection">
             <parameter>@BootstrapThumbnailBlockBundle/Resources/public/js/thumbnail_editor.js</parameter>
         </parameter>
         
-        <parameter key="bootstrap_thumbnail_block.block.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block\AlBlockManagerBootstrapThumbnailBlock</parameter>
-        <parameter key="bootstrapthumbnailblock.form.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Form\AlThumbnailType</parameter>
+        <parameter key="bootstrap_thumbnail.form.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Form\AlThumbnailType</parameter>
+        <parameter key="bootstrap_thumbnail.block.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block\AlBlockManagerBootstrapThumbnailBlock</parameter>        
+        <parameter key="bootstrap_thumbnails.block.class">AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block\AlBlockManagerBootstrapThumbnailsBlock</parameter>
+        
     </parameters>
 
     <services>
-        <service id="bootstrap_thumbnail_block.block" class="%bootstrap_thumbnail_block.block.class%">
+        <service id="bootstrap_thumbnail.block" class="%bootstrap_thumbnail.block.class%">
             <tag name="alphalemon_cms.blocks_factory.block" description="Thumbnail" type="BootstrapThumbnailBlock" group="bootstrap,Twitter Bootstrap" />
             <argument type="service" id="service_container" />
         </service>
         
-        <service id="bootstrapthumbnailblock.form" class="%bootstrapthumbnailblock.form.class%">
+        <service id="bootstrap_thumbnails.block" class="%bootstrap_thumbnails.block.class%">
+            <tag name="alphalemon_cms.blocks_factory.block" description="Thumbnails list" type="BootstrapThumbnailsBlock" group="bootstrap,Twitter Bootstrap" />
+            <argument type="service" id="service_container" />
+        </service>
+        
+        <service id="bootstrap_thumbnail.form" class="%bootstrap_thumbnail.form.class%">
         </service>
     </services>
 </container>
