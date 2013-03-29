@@ -12,6 +12,9 @@ use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\JsonBlock\AlBlockManagerJs
  */
 class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerJsonBlockContainer
 {
+    protected $blockTemplate = 'BootstrapThumbnailBlockBundle:Thumbnail:thumbnail.html.twig';
+    protected $editorTemplate = 'BootstrapThumbnailBlockBundle:Editor:_editor.html.twig';
+    
     public function getDefaultValue()
     {
         $value = '
@@ -30,7 +33,7 @@ class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerJsonBlockConta
         $item = $items[0];
         
         return array('RenderView' => array(
-            'view' => 'BootstrapThumbnailBlockBundle:Thumbnail:thumbnail.html.twig',
+            'view' => $this->blockTemplate,
             'options' => array(
                 'thumbnail' => $item,
                 'parent' => $this->alBlock,
@@ -47,9 +50,14 @@ class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerJsonBlockConta
         $form = $this->container->get('form.factory')->create($formClass, $item);
         
         return array(
-            "template" => 'BootstrapThumbnailBlockBundle:Editor:_editor.html.twig',
+            "template" => $this->editorTemplate,
             "title" => "Thumbnail editor",
             "form" => $form->createView(),
         );
+    }
+    
+    public function getIsInternalBlock()
+    {
+        return true;
     }
 }
