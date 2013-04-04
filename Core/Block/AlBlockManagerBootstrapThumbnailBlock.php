@@ -27,7 +27,7 @@ class AlBlockManagerBootstrapThumbnailBlock extends AlBlockManagerJsonBlockConta
         return array('Content' => $value);
     }
 
-    public function getHtml()
+    protected function renderHtml()
     {
         $items = $this->decodeJsonContent($this->alBlock->getContent());
         $item = $items[0];
