@@ -4,10 +4,10 @@
 <ul class="thumbnails al-thumbnail-list" {{ editor|raw }}>
     {% if values|length > 0 %}
     {% for key, thumbnail in values %}
-    {% set baseSlotName = parent.getId ~ "-" ~ key %} 
+    {% set baseSlotName = block_manager.get.getId ~ "-" ~ key %} 
     
     {% set attributes = 'data-item=' ~ key ~ ' data-slot-name=' ~ baseSlotName %}
-    {{ renderIncludedBlock(baseSlotName, parent, thumbnail.type, true, "", attributes) }}    
+    {{ renderIncludedBlock(baseSlotName, block_manager, thumbnail.type, true, "", attributes) }}    
     {% endfor %}
     {% else %}
     <li class="al-empty">Any thumbnail added</li>
