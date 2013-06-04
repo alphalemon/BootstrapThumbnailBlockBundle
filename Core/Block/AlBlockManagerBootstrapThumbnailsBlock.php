@@ -1,6 +1,18 @@
 <?php
-/**
- * An AlphaLemonCms Block
+/*
+ * This file is part of the BootstrapThumbnailBlockBundle and it is distributed
+ * under the MIT LICENSE. To use this application you must leave intact this copyright 
+ * notice.
+ *
+ * Copyright (c) AlphaLemon <webmaster@alphalemon.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * For extra documentation and help please visit http://www.alphalemon.com
+ * 
+ * @license    MIT LICENSE
+ * 
  */
 
 namespace AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block;
@@ -9,10 +21,15 @@ use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\JsonBlock\AlBlockManagerJs
 use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\AlBlockManagerContainer;
 
 /**
- * Description of AlBlockManagerBootstrapThumbnailsBlock
+ * Defines the Block Manager to handle a collection of Bootstrap Thumbnails
+ *
+ * @author AlphaLemon <webmaster@alphalemon.com>
  */
 class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultValue()
     {        
         $value = '
@@ -28,17 +45,35 @@ class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
         return array('Content' => $value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function renderHtml()
     {
         $items = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock->getContent());
         
         return array('RenderView' => array(
             'view' => 'BootstrapThumbnailBlockBundle:Thumbnail:thumbnails.html.twig',
-            'options' => array('values' => $items, 'parent' => $this->alBlock),
+            'options' => array(
+                'values' => $items,
+            ),
         ));
     }
     
+    /**
+     * {@inheritdoc}
+     */
     protected function edit(array $values)
+    {
+        $values = $this->manageThumbnails($values);
+        
+        return parent::edit($values);
+    }
+    
+    /**
+     * Manages the thumbnails, adding and removing them from the json block
+     */
+    protected function manageThumbnails($values)
     {
         if (array_key_exists('Content', $values)) {
             $data = json_decode($values['Content'], true); 
@@ -60,6 +95,6 @@ class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
             }
         }
         
-        return parent::edit($values);
+        return $values;
     }
 }

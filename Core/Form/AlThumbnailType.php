@@ -1,12 +1,35 @@
 <?php
-
+/*
+ * This file is part of the BootstrapThumbnailBlockBundle and it is distributed
+ * under the MIT LICENSE. To use this application you must leave intact this copyright 
+ * notice.
+ *
+ * Copyright (c) AlphaLemon <webmaster@alphalemon.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * For extra documentation and help please visit http://www.alphalemon.com
+ * 
+ * @license    MIT LICENSE
+ * 
+ */
+ 
 namespace AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Form;
 
 use AlphaLemon\AlphaLemonCmsBundle\Core\Form\JsonBlock\JsonBlockType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Defines the form to edit a thumbnail block
+ *
+ * @author AlphaLemon <webmaster@alphalemon.com>
+ */
 class AlThumbnailType extends JsonBlockType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
