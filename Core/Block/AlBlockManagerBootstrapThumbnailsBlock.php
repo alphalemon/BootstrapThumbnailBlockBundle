@@ -17,15 +17,14 @@
 
 namespace AlphaLemon\Block\BootstrapThumbnailBlockBundle\Core\Block;
 
-use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\JsonBlock\AlBlockManagerJsonBlock;
-use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\AlBlockManagerContainer;
+use AlphaLemon\AlphaLemonCmsBundle\Core\Content\Block\JsonBlock\AlBlockManagerJsonBlockCollection;
 
 /**
  * Defines the Block Manager to handle a collection of Bootstrap Thumbnails
  *
  * @author AlphaLemon <webmaster@alphalemon.com>
  */
-class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
+class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerJsonBlockCollection
 {
     /**
      * {@inheritdoc}
@@ -50,7 +49,7 @@ class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
      */
     protected function renderHtml()
     {
-        $items = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock->getContent());
+        $items = $this->decodeJsonContent($this->alBlock->getContent());
         
         return array('RenderView' => array(
             'view' => 'BootstrapThumbnailBlockBundle:Thumbnail:thumbnails.html.twig',
@@ -58,43 +57,5 @@ class AlBlockManagerBootstrapThumbnailsBlock extends AlBlockManagerContainer
                 'values' => $items,
             ),
         ));
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function edit(array $values)
-    {
-        $values = $this->manageThumbnails($values);
-        
-        return parent::edit($values);
-    }
-    
-    /**
-     * Manages the thumbnails, adding and removing them from the json block
-     */
-    protected function manageThumbnails($values)
-    {
-        if (array_key_exists('Content', $values)) {
-            $data = json_decode($values['Content'], true); 
-            $savedValues = AlBlockManagerJsonBlock::decodeJsonContent($this->alBlock);
-
-            if ($data["operation"] == "add") {
-                $savedValues[] = $data["value"];
-                $values = array("Content" => json_encode($savedValues));
-            }
-
-            if ($data["operation"] == "remove") {
-                unset($savedValues[$data["item"]]);
-
-                $blocksRepository = $this->container->get('alpha_lemon_cms.factory_repository');
-                $repository = $blocksRepository->createRepository('Block');
-                $repository->deleteIncludedBlocks($data["slotName"]);
-
-                $values = array("Content" => json_encode($savedValues));
-            }
-        }
-        
-        return $values;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the BootstrapLabelBlockBundle and it is distributed
+ * This file is part of the BootstrapThumbnailBlockBundle and it is distributed
  * under the MIT LICENSE. To use this application you must leave intact this copyright 
  * notice.
  *
