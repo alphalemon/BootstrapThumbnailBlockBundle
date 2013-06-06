@@ -4,6 +4,8 @@ BootstrapThumbnailBlockBundle
 Implements an AlphaLemon CMS app-block capable to manage a Twitter Thumbnail images 
 list by a nice ajax powered inteface.
 
+[![Build Status](https://secure.travis-ci.org/alphalemon/BootstrapThumbnailBlockBundle.png)](http://travis-ci.org/alphalemon/BootstrapThumbnailBlockBundle)
+
 Installation
 ------------
 
